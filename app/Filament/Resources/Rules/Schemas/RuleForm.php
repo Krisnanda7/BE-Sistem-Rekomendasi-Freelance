@@ -13,11 +13,9 @@ class RuleForm
 {
     public static function configure(Schema $schema): Schema
     {
-         $questions = Question::pluck('text')->toArray();
-         
         return $schema
             ->components([
-                 TextInput::make('name')
+                TextInput::make('name')
                     ->label('Nama Pekerjaan Freelance')
                     ->required(),
 
@@ -32,15 +30,26 @@ class RuleForm
                             ->label('Pertanyaan')
                             ->disabled(), // supaya user tidak ubah
                         Toggle::make('value')
-                            ->label('Jawaban (Ya/Tidak)')
+                            ->label('Nilai')
                             ->required(),
                     ])
-                    ->default(fn() =>
-                        collect($questions)->map(fn($q) => [
+                    ->default(function () {
+                        $questions = \App\Models\Question::pluck('text')->toArray();
+                        return collect($questions)->map(fn($q) => [
                             'question' => $q,
                             'value' => false,
-                        ])->toArray()
-                    ),
-        ]);
+                        ])->toArray();
+                    })
+                    ->afterStateHydrated(function ($set, $state) {
+                        // jika data lama masih berupa array boolean, ubah ke format baru
+                        if (!empty($state) && isset($state[0]) && !isset($state[0]['question'])) {
+                            $questions = \App\Models\Question::pluck('text')->toArray();
+                            $set('conditions', collect($questions)->map(fn($q, $i) => [
+                                'question' => $q,
+                                'value' => $state[$i] ?? false,
+                            ])->toArray());
+                        }
+                    }), // ← ini tanda kurung & koma penting!
+            ]);
     }
 }

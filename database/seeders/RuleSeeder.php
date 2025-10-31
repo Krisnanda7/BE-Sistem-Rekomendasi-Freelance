@@ -4,50 +4,33 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Rule;
+use App\Models\Question;
 
 class RuleSeeder extends Seeder
 {
     public function run(): void
     {
+        $questions = Question::pluck('text')->toArray();
+
         $rules = [
             [
                 'name' => 'Web Developer Freelance',
-                'conditions' => json_encode([
-                    ['value' => true], ['value' => false], ['value' => true],
-                    ['value' => true], ['value' => false], ['value' => true],
-                    ['value' => false], ['value' => false], ['value' => true],
-                    ['value' => true],
-                ]),
+                'conditions' => [true, false, true, true, false, true, false, false, true, true],
                 'description' => 'Cocok untuk proyek pembuatan website atau aplikasi web dengan durasi singkat secara remote.',
             ],
             [
                 'name' => 'UI/UX Designer Freelance',
-                'conditions' => json_encode([
-                    ['value' => false], ['value' => true], ['value' => true],
-                    ['value' => true], ['value' => false], ['value' => true],
-                    ['value' => false], ['value' => false], ['value' => false],
-                    ['value' => true],
-                ]),
+                'conditions' => [false, true, true, true, false, true, false, false, false, true],
                 'description' => 'Cocok untuk proyek desain antarmuka aplikasi mobile atau website startup.',
             ],
             [
                 'name' => 'AI Developer Freelance',
-                'conditions' => json_encode([
-                    ['value' => true], ['value' => false], ['value' => true],
-                    ['value' => false], ['value' => false], ['value' => true],
-                    ['value' => true], ['value' => true], ['value' => true],
-                    ['value' => true],
-                ]),
+                'conditions' => [true, false, true, false, false, true, true, true, true, true],
                 'description' => 'Cocok untuk proyek pengembangan model AI/ML untuk perusahaan teknologi.',
             ],
             [
                 'name' => 'Graphic Designer Remote',
-                'conditions' => json_encode([
-                    ['value' => false], ['value' => true], ['value' => false],
-                    ['value' => true], ['value' => false], ['value' => true],
-                    ['value' => false], ['value' => false], ['value' => false],
-                    ['value' => true],
-                ]),
+                'conditions' => [false, true, false, true, false, true, false, false, false, true],
                 'description' => 'Cocok untuk proyek desain poster, banner, dan materi promosi digital jarak jauh.',
             ],
         ];
