@@ -18,7 +18,7 @@ class RuleResource extends Resource
 {
     protected static ?string $model = Rule::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Cog6Tooth;
 
     protected static ?string $recordTitleAttribute = 'rule';
 

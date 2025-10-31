@@ -10,11 +10,12 @@ class ResultController extends Controller
     {
         $data = $request->validate([
             'answers' => 'required|array',
+            
         ]);
 
         $result = Result::create([
             'answers' => json_encode($data['answers']),
-            'recommendation' => 'pending', // nanti bisa di-update oleh sistem rekomendasi
+            'recommendation' => 'Hasil Rekomendasi', // nanti bisa di-update oleh sistem rekomendasi
         ]);
 
         return response()->json($result);
